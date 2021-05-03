@@ -1,12 +1,12 @@
 # grocery-carbon-footprint-lambda
 
-This README is modified from the SAM Templated README for the PyTorch example.
+This README is slightly tweaked from the SAM Templated README for the PyTorch example.
 
 This directory contains source code and supporting files for a serverless application to classify grocery item images and provide their carbon footprints:
 
 - app/app.py - Code for the application's Lambda function including the code for ML inferencing.
 - app/Dockerfile - The Dockerfile to build the container image.
-- app/model - A ResNet model that was fine-tuned on the Freiburg Grocery Dataset.
+- app/resnet\_model.pt - A ResNet model that was fine-tuned on the Freiburg Grocery Dataset (The checkpoint is not part of this repository).
 - app/requirements.txt - The pip requirements to be installed during the container build.
 - events - Invocation events that you can use to invoke the function.
 - template.yml - A template that defines the application's AWS resources.
