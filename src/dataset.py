@@ -1,8 +1,10 @@
 from torch.utils.data import Dataset
 from skimage import io
 
-
 class GroceryDataset(Dataset):
+    """
+    The Torch Freiburg Grocery Dataset 
+    """
     def __init__(self, df, label_map, transform):
         super().__init__()
         self.df = df

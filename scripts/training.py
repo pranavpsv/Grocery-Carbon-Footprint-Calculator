@@ -29,6 +29,7 @@ import sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 from src.reproducibility import set_all_seeds
 from src.dataset import GroceryDataset
+from typing import Tuple, Dict
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -38,9 +39,13 @@ imagenet_stds = [0.229, 0.224, 0.225]
 pretrained_img_size = (224, 224)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def prepare_dataset():
+def prepare_dataset() -> Tuple[pd.DataFrame, Dict]:
     """
     Returns the Freiburg dataset as a DataFrame and Label Map mapping from label to index
+
+    Returns:
+        Tuple[pd.DataFrame, Dict]: A tuple of the DataFrame for Freiburg dataset and Label mapping
+        from the label name to an integer
     """
 
     data_dir = Path.cwd()/"freiburg_grocery_images"
@@ -72,7 +77,7 @@ data_transforms = {
 }
 
 
-def train(epochs, model, loss_func, optimizer, train_dl, valid_dl, scheduler=None):
+def train(epochs, model, loss_func, optimizer, train_dl, valid_dl,):
     """
     Trains the model for a set number of epochs and evaluates the model at the end
     of every epoch
@@ -121,14 +126,33 @@ def train(epochs, model, loss_func, optimizer, train_dl, valid_dl, scheduler=Non
     return epoch_val_acc
 
 
-def init_resnet(num_classes):
+def init_resnet(num_classes: int) -> nn.Module:
+    """
+    Initialize a ResNet-50 model
+
+    Args:
+        num_classes (int): Number of Output Classes
+
+    Returns:
+        nn.Module: The ResNet model
+
+    """
     model = models.resnet50(pretrained=True)
     num_features = model.fc.in_features
     model.fc = nn.Linear(num_features, num_classes)
 
     return model
 
-def init_efficientnet(num_classes):
+def init_efficientnet(num_classes: int) -> nn.Module:
+    """
+    Initialize an EfficientNet B1 model.
+
+    Args:
+        num_classes (int): Number of Output Classes
+
+    Returns:
+        nn.Module: The EfficientNet model
+    """
 
     return EfficientNet.from_pretrained('efficientnet-b1', num_classes=num_classes)
 
