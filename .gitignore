@@ -1,0 +1,5 @@
+freiburg_grocery_images/
+grocery-carbon-footprint-lambda/app/carbon_footprint_grocery.csv
+grocery-carbon-footprint-lambda/.*
+grocery-carbon-footprint-lambda/app/*.pt
+
